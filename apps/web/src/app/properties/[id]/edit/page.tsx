@@ -28,7 +28,7 @@ export default function EditPropertyPage({
       });
       router.push(`/properties/${propertyId}`);
     } catch {
-      // Error handled by React Query
+      // Error is handled by React Query
     }
   };
 

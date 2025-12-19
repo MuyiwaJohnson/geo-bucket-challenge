@@ -18,14 +18,6 @@ export async function bucketsRoutes(fastify: FastifyInstance) {
               min_properties_per_bucket: { type: "number" },
             },
           },
-          500: {
-            type: "object",
-            properties: {
-              error: { type: "string" },
-              message: { type: "string" },
-              statusCode: { type: "number" },
-            },
-          },
         },
       },
     },

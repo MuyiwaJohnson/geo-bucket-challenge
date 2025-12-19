@@ -7,6 +7,7 @@ import {
 } from "@geoflow/db/functions.js";
 import { testProperties } from "./data.js";
 
+// Load .env.local file from the seed app directory
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 config({ path: resolve(__dirname, "..", ".env.local") });
@@ -15,6 +16,7 @@ async function seed() {
   console.log("🌱 Starting seed...\n");
 
   try {
+    // Insert all test properties
     console.log(`📦 Inserting ${testProperties.length} properties...\n`);
 
     for (const property of testProperties) {
@@ -28,6 +30,7 @@ async function seed() {
       }
     }
 
+    // Verify test case
     console.log("\n🔍 Verifying test case...\n");
     const searchResults = await searchPropertiesByLocation("sangotedo");
 

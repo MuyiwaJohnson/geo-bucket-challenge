@@ -16,7 +16,7 @@ export default function NewPropertyPage() {
       const property = await createProperty.mutateAsync(data);
       router.push(`/properties/${property.id}`);
     } catch {
-      // Error handled by React Query
+      // Error is handled by React Query
     }
   };
 

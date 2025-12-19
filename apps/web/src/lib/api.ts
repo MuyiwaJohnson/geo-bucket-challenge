@@ -5,6 +5,8 @@ import type {
   ErrorResponse,
 } from "@geoflow/types";
 
+// Use relative URLs - Next.js API routes proxy to backend
+// Backend API URL is hidden server-side only
 const API_BASE = "/api";
 
 async function handleResponse<T>(response: Response): Promise<T> {
