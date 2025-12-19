@@ -17,7 +17,7 @@ await server.register(env, {
     properties: {
       SUPABASE_URL: { type: "string" },
       SUPABASE_SERVICE_KEY: { type: "string" },
-      PORT: { type: "number", default: 3000 },
+      PORT: { type: "number", default: 3001 },
       HOST: { type: "string", default: "0.0.0.0" },
     },
   },
@@ -39,12 +39,16 @@ server.get("/", async () => {
     name: "GeoFlow API",
     version: "1.0.0",
     description: "Geo-bucket property search API",
-    endpoints: {
-      health: "/health",
-      createProperty: "POST /api/properties",
-      searchProperties: "GET /api/properties/search?location=<location>",
-      bucketStats: "GET /api/geo-buckets/stats",
-    },
+      endpoints: {
+        health: "/health",
+        listProperties: "GET /api/properties",
+        getProperty: "GET /api/properties/:id",
+        createProperty: "POST /api/properties",
+        updateProperty: "PUT /api/properties/:id",
+        deleteProperty: "DELETE /api/properties/:id",
+        searchProperties: "GET /api/properties/search?location=<location>",
+        bucketStats: "GET /api/geo-buckets/stats",
+      },
   };
 });
 
@@ -52,7 +56,7 @@ server.get("/health", async () => {
   return { status: "ok" };
 });
 
-const port = Number(process.env.PORT) || 3000;
+const port = Number(process.env.PORT) || 3001;
 const host = process.env.HOST || "0.0.0.0";
 
 try {

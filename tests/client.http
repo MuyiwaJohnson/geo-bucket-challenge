@@ -1,11 +1,11 @@
 ### Root endpoint
-GET http://localhost:3000/
+GET http://localhost:3001/
 
 ### Health check
-GET http://localhost:3000/health
+GET http://localhost:3001/health
 
 ### Create a property
-POST http://localhost:3000/api/properties
+POST http://localhost:3001/api/properties
 Content-Type: application/json
 
 {
@@ -19,7 +19,7 @@ Content-Type: application/json
 }
 
 ### Create another property (same location, different name)
-POST http://localhost:3000/api/properties
+POST http://localhost:3001/api/properties
 Content-Type: application/json
 
 {
@@ -33,26 +33,26 @@ Content-Type: application/json
 }
 
 ### Search properties by location (case-insensitive)
-GET http://localhost:3000/api/properties/search?location=sangotedo
+GET http://localhost:3001/api/properties/search?location=sangotedo
 
 ### Search with different case
-GET http://localhost:3000/api/properties/search?location=SANGOTEDO
+GET http://localhost:3001/api/properties/search?location=SANGOTEDO
 
 ### Search with location variation (space separated)
-GET http://localhost:3000/api/properties/search?location=sangotedo%20lagos
+GET http://localhost:3001/api/properties/search?location=sangotedo%20lagos
 
 ### Search with location variation (comma separated)
-GET http://localhost:3000/api/properties/search?location=sangotedo,ajah
+GET http://localhost:3001/api/properties/search?location=sangotedo,ajah
 
 ### Search with location variation (space separated)
-GET http://localhost:3000/api/properties/search?location=sangotedo%20ajah
+GET http://localhost:3001/api/properties/search?location=sangotedo%20ajah
 
 ### Search with location variation (comma separated)
-GET http://localhost:3000/api/properties/search?location=sangotedo,lagos
+GET http://localhost:3001/api/properties/search?location=sangotedo,lagos
 
 ### Search with location variation (space separated)
-GET http://localhost:3000/api/properties/search?location=sangotedo%20lagos
+GET http://localhost:3001/api/properties/search?location=sangotedo%20lagos
 
 
 ### Get bucket statistics
-GET http://localhost:3000/api/geo-buckets/stats
+GET http://localhost:3001/api/geo-buckets/stats
