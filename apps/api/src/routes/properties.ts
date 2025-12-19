@@ -3,6 +3,7 @@ import { createProperty } from "@geoflow/db/functions.js";
 import { createPropertySchema } from "../lib/validation.js";
 import type { CreatePropertyRequest, PropertyResponse } from "@geoflow/types";
 import { supabase } from "@geoflow/db/client.js";
+import { verifyAuth } from "../plugins/auth.js";
 
 const propertyResponseSchema = {
   type: "object",
@@ -169,6 +170,7 @@ export async function propertiesRoutes(fastify: FastifyInstance) {
   }>(
     "/api/properties",
     {
+      preHandler: [verifyAuth],
       schema: {
         body: {
           type: "object",
@@ -185,6 +187,13 @@ export async function propertiesRoutes(fastify: FastifyInstance) {
         },
         response: {
           201: propertyResponseSchema,
+          401: {
+            type: "object",
+            properties: {
+              error: { type: "string" },
+              message: { type: "string" },
+            },
+          },
         },
       },
     },
@@ -226,6 +235,7 @@ export async function propertiesRoutes(fastify: FastifyInstance) {
   }>(
     "/api/properties/:id",
     {
+      preHandler: [verifyAuth],
       schema: {
         params: {
           type: "object",
@@ -248,6 +258,13 @@ export async function propertiesRoutes(fastify: FastifyInstance) {
         },
         response: {
           200: propertyResponseSchema,
+          401: {
+            type: "object",
+            properties: {
+              error: { type: "string" },
+              message: { type: "string" },
+            },
+          },
           404: {
             type: "object",
             properties: {
@@ -338,6 +355,7 @@ export async function propertiesRoutes(fastify: FastifyInstance) {
   }>(
     "/api/properties/:id",
     {
+      preHandler: [verifyAuth],
       schema: {
         params: {
           type: "object",
@@ -348,6 +366,13 @@ export async function propertiesRoutes(fastify: FastifyInstance) {
         },
         response: {
           204: {},
+          401: {
+            type: "object",
+            properties: {
+              error: { type: "string" },
+              message: { type: "string" },
+            },
+          },
           404: {
             type: "object",
             properties: {

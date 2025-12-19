@@ -67,6 +67,7 @@ cp .env-template .env.local
 # Get from: Supabase Dashboard > Settings > API
 SUPABASE_URL=https://[PROJECT_ID].supabase.co
 SUPABASE_SERVICE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...  # Required for auth
 
 # API Configuration (apps/api only)
 PORT=3001
@@ -170,7 +171,7 @@ pnpm test
 
 #### 1. Create Property
 
-**POST** `/api/properties`
+**POST** `/api/properties` 🔒 **Requires Authentication**
 
 Creates a new property and automatically assigns it to a geo-bucket.
 
@@ -205,6 +206,10 @@ Creates a new property and automatically assigns it to a geo-bucket.
 }
 ```
 
+**Headers:**
+
+- `Authorization: Bearer <jwt-token>` (required)
+
 **Validation:**
 
 - `title`: Required, non-empty string
@@ -215,13 +220,18 @@ Creates a new property and automatically assigns it to a geo-bucket.
 - `bedrooms`: Optional, non-negative integer
 - `bathrooms`: Optional, non-negative integer
 
+**Error Responses:**
+
+- `401 Unauthorized`: Missing or invalid token
+- `400 Bad Request`: Validation error
+
 ---
 
 #### 2. Search Properties by Location
 
-**GET** `/api/properties/search?location=sangotedo`
+**GET** `/api/properties/search?location=sangotedo` (Public)
 
-Searches for properties by location name (case-insensitive, typo-tolerant).
+Searches for properties by location name (case-insensitive, typo-tolerant). **Public endpoint** (no auth required).
 
 **Query Parameters:**
 
@@ -273,9 +283,9 @@ GET /api/properties/search?location=Sangotedo
 
 #### 3. Get Bucket Statistics
 
-**GET** `/api/geo-buckets/stats`
+**GET** `/api/geo-buckets/stats` (Public)
 
-Returns statistics about geo-buckets and property distribution.
+Returns statistics about geo-buckets and property distribution. **Public endpoint** (no auth required).
 
 **Response:** `200 OK`
 

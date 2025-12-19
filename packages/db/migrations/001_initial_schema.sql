@@ -333,32 +333,39 @@ FOR SELECT
 TO public
 USING (true);
 
--- Allow public INSERT access to properties (for API)
-CREATE POLICY "Allow public INSERT on properties"
+-- Allow authenticated users to INSERT properties
+CREATE POLICY "Allow authenticated INSERT on properties"
 ON public.properties
 FOR INSERT
-TO public
+TO authenticated
 WITH CHECK (true);
 
--- Allow public INSERT access to geo_buckets (via functions)
-CREATE POLICY "Allow public INSERT on geo_buckets"
+-- Allow authenticated users to INSERT geo_buckets (via functions)
+CREATE POLICY "Allow authenticated INSERT on geo_buckets"
 ON public.geo_buckets
 FOR INSERT
-TO public
+TO authenticated
 WITH CHECK (true);
 
--- Allow public INSERT access to location_aliases (via functions)
-CREATE POLICY "Allow public INSERT on location_aliases"
+-- Allow authenticated users to INSERT location_aliases (via functions)
+CREATE POLICY "Allow authenticated INSERT on location_aliases"
 ON public.location_aliases
 FOR INSERT
-TO public
+TO authenticated
 WITH CHECK (true);
 
--- Allow public UPDATE access to properties (if needed)
-CREATE POLICY "Allow public UPDATE on properties"
+-- Allow authenticated users to UPDATE properties
+CREATE POLICY "Allow authenticated UPDATE on properties"
 ON public.properties
 FOR UPDATE
-TO public
+TO authenticated
 USING (true)
 WITH CHECK (true);
+
+-- Allow authenticated users to DELETE properties
+CREATE POLICY "Allow authenticated DELETE on properties"
+ON public.properties
+FOR DELETE
+TO authenticated
+USING (true);
 

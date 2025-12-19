@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 import cors from "@fastify/cors";
 import env from "@fastify/env";
+import { authPlugin } from "./plugins/auth.js";
 import { propertiesRoutes } from "./routes/properties.js";
 import { searchRoutes } from "./routes/search.js";
 import { bucketsRoutes } from "./routes/buckets.js";
@@ -13,10 +14,11 @@ await server.register(env, {
   confKey: "config",
   schema: {
     type: "object",
-    required: ["SUPABASE_URL", "SUPABASE_SERVICE_KEY"],
+    required: ["SUPABASE_URL", "SUPABASE_SERVICE_KEY", "SUPABASE_ANON_KEY"],
     properties: {
       SUPABASE_URL: { type: "string" },
       SUPABASE_SERVICE_KEY: { type: "string" },
+      SUPABASE_ANON_KEY: { type: "string" },
       PORT: { type: "number", default: 3001 },
       HOST: { type: "string", default: "0.0.0.0" },
     },
@@ -30,6 +32,8 @@ await server.register(cors, {
   origin: true,
 });
 
+await server.register(authPlugin);
+
 await server.register(propertiesRoutes);
 await server.register(searchRoutes);
 await server.register(bucketsRoutes);
@@ -39,16 +43,16 @@ server.get("/", async () => {
     name: "GeoFlow API",
     version: "1.0.0",
     description: "Geo-bucket property search API",
-      endpoints: {
-        health: "/health",
-        listProperties: "GET /api/properties",
-        getProperty: "GET /api/properties/:id",
-        createProperty: "POST /api/properties",
-        updateProperty: "PUT /api/properties/:id",
-        deleteProperty: "DELETE /api/properties/:id",
-        searchProperties: "GET /api/properties/search?location=<location>",
-        bucketStats: "GET /api/geo-buckets/stats",
-      },
+    endpoints: {
+      health: "/health",
+      listProperties: "GET /api/properties",
+      getProperty: "GET /api/properties/:id",
+      createProperty: "POST /api/properties",
+      updateProperty: "PUT /api/properties/:id",
+      deleteProperty: "DELETE /api/properties/:id",
+      searchProperties: "GET /api/properties/search?location=<location>",
+      bucketStats: "GET /api/geo-buckets/stats",
+    },
   };
 });
 
