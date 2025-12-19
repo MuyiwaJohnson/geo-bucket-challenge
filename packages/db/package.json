@@ -1,0 +1,31 @@
+{
+  "name": "@geoflow/db",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.47.10"
+  },
+  "devDependencies": {
+    "@geoflow/eslint-config": "workspace:*",
+    "@geoflow/typescript-config": "workspace:*",
+    "@types/node": "^22.16.0",
+    "eslint": "^9.32.0",
+    "typescript": "^5.9.2"
+  },
+  "exports": {
+    "./client.js": "./src/client.ts",
+    "./functions.js": "./src/functions.ts",
+    "./types.js": "./src/types/index.ts",
+    "./types/db.types.js": "./src/types/db.types.ts",
+    "./client": "./src/client.ts",
+    "./functions": "./src/functions.ts",
+    "./types": "./src/types/index.ts",
+    "./types/db.types": "./src/types/db.types.ts"
+  }
+}
+

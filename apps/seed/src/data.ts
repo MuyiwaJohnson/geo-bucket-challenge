@@ -1,0 +1,68 @@
+import type { CreatePropertyRequest } from "@geoflow/types";
+
+export const testProperties: CreatePropertyRequest[] = [
+  {
+    title: '3BR Flat in Sangotedo',
+    location_name: 'Sangotedo',
+    lat: 6.4698,
+    lng: 3.6285,
+    price: 5000000,
+    bedrooms: 3,
+    bathrooms: 2,
+  },
+  {
+    title: "2BR Apartment near Ajah",
+    location_name: "Sangotedo, Ajah",
+    lat: 6.472,
+    lng: 3.6301,
+    price: 3500000,
+    bedrooms: 2,
+    bathrooms: 1,
+  },
+  {
+    title: "4BR Duplex Lagos",
+    location_name: "sangotedo lagos",
+    lat: 6.4705,
+    lng: 3.6290,
+    price: 12000000,
+    bedrooms: 4,
+    bathrooms: 3,
+  },
+  {
+    title: "Studio in Lekki Phase 1",
+    location_name: 'Lekki Phase 1',
+    lat: 6.4650,
+    lng: 3.4700,
+    price: 2000000,
+    bedrooms: 0,
+    bathrooms: 1,
+  },
+  {
+    title: "5BR Mansion Victoria Island",
+    location_name: "Victoria Island",
+    lat: 6.4281,
+    lng: 3.4219,
+    price: 50000000,
+    bedrooms: 5,
+    bathrooms: 4,
+  },
+  {
+    title: "1BR Close to Sangotedo",
+    location_name: "Near Sangotedo",
+    lat: 6.4699,
+    lng: 3.6286,
+    price: 1800000,
+    bedrooms: 1,
+    bathrooms: 1,
+  },
+  {
+    title: "2BR in Sangotedo",
+    location_name: "Sangotedo",
+    lat: 6.471,
+    lng: 3.6295,
+    price: 4000000,
+    bedrooms: 2,
+    bathrooms: 2,
+  },
+];
+

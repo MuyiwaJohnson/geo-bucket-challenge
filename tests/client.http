@@ -1,0 +1,58 @@
+### Root endpoint
+GET http://localhost:3000/
+
+### Health check
+GET http://localhost:3000/health
+
+### Create a property
+POST http://localhost:3000/api/properties
+Content-Type: application/json
+
+{
+  "title": "3BR Flat in Sangotedo",
+  "location_name": "Sangotedo",
+  "lat": 6.4698,
+  "lng": 3.6285,
+  "price": 5000000,
+  "bedrooms": 3,
+  "bathrooms": 2
+}
+
+### Create another property (same location, different name)
+POST http://localhost:3000/api/properties
+Content-Type: application/json
+
+{
+  "title": "2BR Apartment near Ajah",
+  "location_name": "Sangotedo, Ajah",
+  "lat": 6.472,
+  "lng": 3.6301,
+  "price": 3500000,
+  "bedrooms": 2,
+  "bathrooms": 1
+}
+
+### Search properties by location (case-insensitive)
+GET http://localhost:3000/api/properties/search?location=sangotedo
+
+### Search with different case
+GET http://localhost:3000/api/properties/search?location=SANGOTEDO
+
+### Search with location variation (space separated)
+GET http://localhost:3000/api/properties/search?location=sangotedo%20lagos
+
+### Search with location variation (comma separated)
+GET http://localhost:3000/api/properties/search?location=sangotedo,ajah
+
+### Search with location variation (space separated)
+GET http://localhost:3000/api/properties/search?location=sangotedo%20ajah
+
+### Search with location variation (comma separated)
+GET http://localhost:3000/api/properties/search?location=sangotedo,lagos
+
+### Search with location variation (space separated)
+GET http://localhost:3000/api/properties/search?location=sangotedo%20lagos
+
+
+### Get bucket statistics
+GET http://localhost:3000/api/geo-buckets/stats
