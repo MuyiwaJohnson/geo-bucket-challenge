@@ -25,7 +25,7 @@ export default function MapPage() {
     return (
       <div className="min-h-screen flex flex-col">
         <Header />
-        <main className="flex-1 container py-8">
+        <main className="flex-1 container py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <p className="text-destructive">Error loading properties</p>
           </div>

@@ -37,7 +37,7 @@ export default function PropertyDetailPage({
       await deleteProperty.mutateAsync(propertyId);
       router.push("/properties");
     } catch {
-      // Error is handled by React Query
+      // Error handled by React Query
     }
   };
 

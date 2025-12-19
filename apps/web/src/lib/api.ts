@@ -5,7 +5,7 @@ import type {
   ErrorResponse,
 } from "@geoflow/types";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+const API_BASE = "/api";
 
 async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
@@ -27,15 +27,15 @@ async function handleResponse<T>(response: Response): Promise<T> {
 export const api = {
   properties: {
     list: async (): Promise<PropertyResponse[]> => {
-      const response = await fetch(`${API_BASE}/api/properties`);
+      const response = await fetch(`${API_BASE}/properties`);
       return handleResponse<PropertyResponse[]>(response);
     },
     get: async (id: number): Promise<PropertyResponse> => {
-      const response = await fetch(`${API_BASE}/api/properties/${id}`);
+      const response = await fetch(`${API_BASE}/properties/${id}`);
       return handleResponse<PropertyResponse>(response);
     },
     create: async (data: CreatePropertyRequest): Promise<PropertyResponse> => {
-      const response = await fetch(`${API_BASE}/api/properties`, {
+      const response = await fetch(`${API_BASE}/properties`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -46,7 +46,7 @@ export const api = {
       id: number,
       data: Partial<CreatePropertyRequest>
     ): Promise<PropertyResponse> => {
-      const response = await fetch(`${API_BASE}/api/properties/${id}`, {
+      const response = await fetch(`${API_BASE}/properties/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -54,7 +54,7 @@ export const api = {
       return handleResponse<PropertyResponse>(response);
     },
     delete: async (id: number): Promise<void> => {
-      const response = await fetch(`${API_BASE}/api/properties/${id}`, {
+      const response = await fetch(`${API_BASE}/properties/${id}`, {
         method: "DELETE",
       });
       if (!response.ok) {
@@ -65,14 +65,14 @@ export const api = {
   search: {
     byLocation: async (location: string): Promise<PropertyResponse[]> => {
       const response = await fetch(
-        `${API_BASE}/api/properties/search?location=${encodeURIComponent(location)}`
+        `${API_BASE}/properties/search?location=${encodeURIComponent(location)}`
       );
       return handleResponse<PropertyResponse[]>(response);
     },
   },
   buckets: {
     stats: async (): Promise<BucketStatsResponse> => {
-      const response = await fetch(`${API_BASE}/api/geo-buckets/stats`);
+      const response = await fetch(`${API_BASE}/geo-buckets/stats`);
       return handleResponse<BucketStatsResponse>(response);
     },
   },

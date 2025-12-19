@@ -6,7 +6,6 @@ import "leaflet/dist/leaflet.css";
 import type { PropertyResponse } from "@geoflow/types";
 import { Loader2 } from "lucide-react";
 
-// Fix for default marker icons in Next.js
 let iconFixed = false;
 function fixLeafletIcons() {
   if (typeof window !== "undefined" && !iconFixed) {
@@ -42,7 +41,6 @@ export function PropertyMap({
   const markersRef = useRef<L.Marker[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize map once
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (!containerRef.current) return;
@@ -61,7 +59,6 @@ export function PropertyMap({
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(mapRef.current);
 
-    // Invalidate size after a short delay to ensure container is sized
     setTimeout(() => {
       mapRef.current?.invalidateSize();
     }, 100);
@@ -78,7 +75,6 @@ export function PropertyMap({
     };
   }, [center, zoom]);
 
-  // Handle resize
   useEffect(() => {
     if (!mapRef.current) return;
 
@@ -88,7 +84,6 @@ export function PropertyMap({
 
     window.addEventListener("resize", handleResize);
 
-    // Also invalidate on visibility change
     const observer = new ResizeObserver(handleResize);
     if (containerRef.current) {
       observer.observe(containerRef.current);
@@ -174,7 +169,6 @@ export function PropertyMap({
     }
   }, [properties, isLoading]);
 
-  // Use min-height for percentage heights
   const containerStyle =
     height === "100%"
       ? { height: "100%", minHeight: "400px", position: "relative" as const }

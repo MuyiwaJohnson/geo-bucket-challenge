@@ -28,7 +28,7 @@ export default function EditPropertyPage({
       });
       router.push(`/properties/${propertyId}`);
     } catch {
-      // Error is handled by React Query
+      // Error handled by React Query
     }
   };
 
@@ -61,7 +61,7 @@ export default function EditPropertyPage({
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 container py-8">
+      <main className="flex-1 container py-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <Card className="max-w-2xl mx-auto">
           <CardHeader>
             <CardTitle>Edit Property</CardTitle>

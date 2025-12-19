@@ -1,6 +1,6 @@
-# Geo-Bucket Backend System
+# GeoFlow - Geo-Bucket Property Search System
 
-A backend service that returns consistent property search results for a given location using geo-buckets, ensuring that properties in the same physical area are returned regardless of location name variations or slight coordinate differences.
+A full-stack application that returns consistent property search results for a given location using geo-buckets, ensuring that properties in the same physical area are returned regardless of location name variations or slight coordinate differences.
 
 ## Features
 
@@ -8,13 +8,15 @@ A backend service that returns consistent property search results for a given lo
 - **Fuzzy Location Matching**: Handles location name variations and typos
 - **PostGIS Integration**: Uses spatial indexes for efficient geo queries
 - **Fastify API**: Fast, lightweight HTTP server
+- **Next.js Frontend**: Modern web interface with interactive maps
 - **TypeScript**: Full type safety across the stack
+- **Monorepo**: Turborepo for efficient workspace management
 
 ## Prerequisites
 
 - **Node.js** >= 20
 - **pnpm** >= 10.4.1
-- **Supabase Account** (with PostGIS enabled)
+- **Supabase Account** (with PostGIS and pg_trgm extensions enabled)
 - **PostgreSQL** (via Supabase)
 
 ## Installation
@@ -47,6 +49,11 @@ cd ../seed
 cp .env-template .env.local
 # Edit .env.local with your Supabase credentials
 
+# For the web frontend
+cd ../web
+cp .env-template .env.local
+# Edit .env.local with API_URL=http://localhost:3001
+
 # For database migrations (optional)
 cd ../../packages/db
 cp .env-template .env.local
@@ -62,8 +69,11 @@ SUPABASE_URL=https://[PROJECT_ID].supabase.co
 SUPABASE_SERVICE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 # API Configuration (apps/api only)
-PORT=3000
+PORT=3001
 HOST=0.0.0.0
+
+# Web Frontend (apps/web only)
+API_URL=http://localhost:3001
 
 # DATABASE (packages/db only - for migrations)
 # Get from: Supabase Dashboard > Settings > Database > Connection String
@@ -85,17 +95,27 @@ Or use Supabase SQL Editor:
 - Paste into Supabase SQL Editor
 - Execute
 
+**Note**: The migration automatically enables required extensions:
+
+- `postgis` - For spatial data types and functions
+- `pg_trgm` - For fuzzy text matching (trigram similarity)
+
 ## Running the Application
 
 ### Development Mode
 
-Start the API server:
+Start all services:
 
 ```bash
 pnpm dev
 ```
 
-The API will be available at `http://localhost:3000`
+This starts:
+
+- **API Server**: `http://localhost:3001`
+- **Web Frontend**: `http://localhost:3000`
+
+The frontend uses Next.js API routes as a proxy layer, so the backend API URL is hidden from the browser.
 
 ### Production Mode
 
@@ -140,11 +160,11 @@ pnpm test
 
 ## API Documentation
 
-### Base URL
+### Base URLs
 
-```
-http://localhost:3000
-```
+- **Backend API**: `http://localhost:3001`
+- **Frontend**: `http://localhost:3000`
+- **Frontend API Proxy**: `http://localhost:3000/api/*` (proxies to backend)
 
 ### Endpoints
 
@@ -292,7 +312,7 @@ Returns server health status.
 **Create a property:**
 
 ```bash
-curl -X POST http://localhost:3000/api/properties \
+curl -X POST http://localhost:3001/api/properties \
   -H "Content-Type: application/json" \
   -d '{
     "title": "3BR Flat in Sangotedo",
@@ -308,20 +328,20 @@ curl -X POST http://localhost:3000/api/properties \
 **Search for properties:**
 
 ```bash
-curl "http://localhost:3000/api/properties/search?location=sangotedo"
+curl "http://localhost:3001/api/properties/search?location=sangotedo"
 ```
 
 **Get bucket stats:**
 
 ```bash
-curl "http://localhost:3000/api/geo-buckets/stats"
+curl "http://localhost:3001/api/geo-buckets/stats"
 ```
 
 ### Using JavaScript/TypeScript
 
 ```typescript
 // Create property
-const response = await fetch("http://localhost:3000/api/properties", {
+const response = await fetch("http://localhost:3001/api/properties", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
@@ -339,7 +359,7 @@ const property = await response.json();
 
 // Search properties
 const searchResponse = await fetch(
-  "http://localhost:3000/api/properties/search?location=sangotedo"
+  "http://localhost:3001/api/properties/search?location=sangotedo"
 );
 const properties = await searchResponse.json();
 ```
@@ -389,7 +409,8 @@ GET /api/properties/search?location=sangotedo
 ```
 geoflow/
 ├── apps/
-│   ├── api/              # Fastify backend service
+│   ├── api/              # Fastify backend service (port 3001)
+│   ├── web/              # Next.js frontend (port 3000)
 │   └── seed/             # Database seeding scripts
 ├── packages/
 │   ├── db/               # Database layer (Supabase client, functions)
@@ -443,12 +464,13 @@ SUPABASE_URL=https://your-project.supabase.co
 SUPABASE_SERVICE_KEY=your-service-role-key
 ```
 
-### PostGIS Not Available
+### PostGIS or pg_trgm Not Available
 
-Supabase has PostGIS enabled by default. If you're using a different PostgreSQL instance, enable it:
+Supabase has PostGIS and pg_trgm enabled by default. If you're using a different PostgreSQL instance, enable them:
 
 ```sql
 CREATE EXTENSION IF NOT EXISTS postgis;
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
 ```
 
 ### Migration Errors
